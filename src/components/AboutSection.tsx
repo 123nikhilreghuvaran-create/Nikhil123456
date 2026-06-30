@@ -1,6 +1,7 @@
 import React from 'react';
 import { PERSONAL_INFO, CORE_EXPERTISE, SELECTED_IMPACT } from '../data';
 import { Award, Briefcase, Zap, Shield, Sparkles } from 'lucide-react';
+import { motion } from 'motion/react';
 
 export default function AboutSection() {
   return (
@@ -21,7 +22,11 @@ export default function AboutSection() {
           
           {/* Column 1: Profile & Philosophy */}
           <div className="lg:col-span-7 space-y-6">
-            <div className="bg-white p-6 md:p-8 rounded-xl border border-stone-200/80 shadow-xs relative overflow-hidden">
+            <motion.div 
+              whileHover={{ y: -3, borderColor: '#ab8355' }}
+              transition={{ type: 'spring', stiffness: 200, damping: 18 }}
+              className="bg-white p-6 md:p-8 rounded-xl border border-stone-200/80 shadow-xs relative overflow-hidden transition-colors"
+            >
               <div className="absolute top-0 right-0 w-24 h-24 bg-[#ab8355]/5 rounded-bl-full" />
               <h3 className="font-display font-semibold text-lg text-stone-900 mb-3.5 flex items-center space-x-2">
                 <Shield className="w-5 h-5 text-[#ab8355]" />
@@ -30,9 +35,13 @@ export default function AboutSection() {
               <p className="font-sans text-stone-700 leading-relaxed text-sm md:text-base">
                 {PERSONAL_INFO.profileSummary}
               </p>
-            </div>
+            </motion.div>
 
-            <div className="bg-stone-900 text-stone-100 p-6 md:p-8 rounded-xl border border-stone-850 shadow-md relative overflow-hidden">
+            <motion.div 
+              whileHover={{ y: -3 }}
+              transition={{ type: 'spring', stiffness: 200, damping: 18 }}
+              className="bg-stone-900 text-stone-100 p-6 md:p-8 rounded-xl border border-stone-850 shadow-md relative overflow-hidden"
+            >
               <div className="absolute top-4 right-4 text-stone-800">
                 <Sparkles className="w-12 h-12 stroke-current" />
               </div>
@@ -43,14 +52,18 @@ export default function AboutSection() {
               <p className="font-sans text-stone-300 leading-relaxed text-sm md:text-base italic">
                 "{PERSONAL_INFO.philosophy}"
               </p>
-            </div>
+            </motion.div>
           </div>
 
           {/* Column 2: Core Expertise & Impact List */}
           <div className="lg:col-span-5 space-y-6">
             
             {/* Core Expertise Card */}
-            <div className="bg-white p-6 rounded-xl border border-stone-200/80 shadow-xs">
+            <motion.div 
+              whileHover={{ y: -3 }}
+              transition={{ type: 'spring', stiffness: 200, damping: 18 }}
+              className="bg-white p-6 rounded-xl border border-stone-200/80 shadow-xs"
+            >
               <h3 className="font-display font-semibold text-[#ab8355] text-sm tracking-wider uppercase mb-4 flex items-center space-x-2">
                 <Briefcase className="w-4 h-4" />
                 <span>Core Expertise</span>
@@ -58,18 +71,23 @@ export default function AboutSection() {
               
               <div className="flex flex-wrap gap-1.5">
                 {CORE_EXPERTISE.map((skill, index) => (
-                  <span
+                  <motion.span
+                    whileHover={{ scale: 1.04, borderColor: '#ab8355' }}
                     key={index}
-                    className="inline-block px-3 py-1.5 rounded-md bg-stone-100 border border-stone-200/60 text-stone-800 text-xs font-sans font-medium hover:border-[#ab8355] hover:bg-stone-50 transition-colors"
+                    className="inline-block px-3 py-1.5 rounded-md bg-stone-100 border border-stone-200/60 text-stone-800 text-xs font-sans font-medium transition-all cursor-default"
                   >
                     {skill}
-                  </span>
+                  </motion.span>
                 ))}
               </div>
-            </div>
+            </motion.div>
 
             {/* Selected Impact Card */}
-            <div className="bg-white p-6 rounded-xl border border-[#ab8355]/30 shadow-xs transition-shadow hover:shadow-sm">
+            <motion.div 
+              whileHover={{ y: -3 }}
+              transition={{ type: 'spring', stiffness: 200, damping: 18 }}
+              className="bg-white p-6 rounded-xl border border-[#ab8355]/20 shadow-xs transition-shadow hover:shadow-sm"
+            >
               <h3 className="font-display font-semibold text-stone-900 text-sm tracking-wider uppercase mb-4 flex items-center space-x-2">
                 <Award className="w-4 h-4 text-[#ab8355]" />
                 <span>Selected Leadership Impact</span>
@@ -77,17 +95,22 @@ export default function AboutSection() {
 
               <ul className="space-y-3.5">
                 {SELECTED_IMPACT.map((impact, index) => (
-                  <li key={index} className="flex items-start">
+                  <motion.li 
+                    whileHover={{ x: 3 }}
+                    transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                    key={index} 
+                    className="flex items-start cursor-default"
+                  >
                     <span className="flex-shrink-0 flex items-center justify-center w-5 h-5 rounded-full bg-[#ab8355]/10 text-[#ab8355] font-mono text-[10px] font-bold mr-3 mt-0.5">
                       {index + 1}
                     </span>
                     <span className="font-sans text-xs md:text-sm text-stone-700 font-medium">
                       {impact}
                     </span>
-                  </li>
+                  </motion.li>
                 ))}
               </ul>
-            </div>
+            </motion.div>
 
           </div>
 

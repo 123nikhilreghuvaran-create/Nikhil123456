@@ -6,6 +6,7 @@ import CaseStudiesSection from './components/CaseStudiesSection';
 import WorkflowStack from './components/WorkflowStack';
 import AwardsEducationSection from './components/AwardsEducationSection';
 import Footer from './components/Footer';
+import { motion } from 'motion/react';
 
 export default function App() {
   const [activeSection, setActiveSection] = useState('profile');
@@ -39,29 +40,59 @@ export default function App() {
       {/* Main Narrative Structure */}
       <main>
         {/* Profile & Philosophy */}
-        <section id="profile-container">
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-120px" }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+          id="profile-container"
+        >
           <AboutSection />
-        </section>
+        </motion.div>
 
         {/* Career & Work History Timeline */}
-        <section id="experience-container">
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-120px" }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+          id="experience-container"
+        >
           <ExperienceTimeline />
-        </section>
+        </motion.div>
 
         {/* Case Studies deep-dive */}
-        <section id="cases-container">
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-120px" }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+          id="cases-container"
+        >
           <CaseStudiesSection />
-        </section>
+        </motion.div>
 
         {/* Hybrid Operations & Tool Stack */}
-        <section id="workflow-container">
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-120px" }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+          id="workflow-container"
+        >
           <WorkflowStack />
-        </section>
+        </motion.div>
 
         {/* Selected Impact, Awards & Academic Pedigree */}
-        <section id="impact-container">
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-120px" }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+          id="impact-container"
+        >
           <AwardsEducationSection />
-        </section>
+        </motion.div>
       </main>
 
       {/* Footer & Hiring Manager Messaging Portal */}

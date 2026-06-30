@@ -178,8 +178,8 @@ export const AWARDS: Award[] = [
 ];
 
 export const EDUCATION_ITEMS: Education[] = [
-  { degree: 'B.Sc. Physics', institution: 'University of Kerala (Standard background in structural analytics)' },
-  { degree: 'Diploma in Animation & Web Designing', institution: 'Apex Academy (Foundation of visual layout and motion)' }
+  { degree: 'B.Sc. Physics (2005 – 2008)', institution: 'CMS College Kottayam' },
+  { degree: 'Diploma in Animation & Web Designing', institution: 'Keltron Kerala' }
 ];
 
 export const BEHANCE_SHOTS = [

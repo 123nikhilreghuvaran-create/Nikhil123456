@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Linkedin, ExternalLink, Menu, X, Play, FileText, Sparkles } from 'lucide-react';
+import { Mail, Phone, MapPin, ExternalLink, Menu, X, FileText, Sparkles } from 'lucide-react';
 import { PERSONAL_INFO } from '../data';
 import { motion, AnimatePresence } from 'motion/react';
 
@@ -10,7 +10,6 @@ interface HeaderProps {
 
 export default function Header({ activeSection, onSectionChange }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [showVideoModal, setShowVideoModal] = useState(false);
 
   const navItems = [
     { id: 'profile', label: 'Profile' },
@@ -79,13 +78,6 @@ export default function Header({ activeSection, onSectionChange }: HeaderProps) 
             {/* Desktop Quick Actions */}
             <div className="hidden lg:flex items-center space-x-3">
               <button
-                onClick={() => setShowVideoModal(true)}
-                className="flex items-center space-x-1.5 px-3.5 py-1.5 rounded-lg border border-stone-200 text-stone-700 bg-white hover:bg-stone-50 hover:text-stone-900 text-xs font-medium transition-all"
-              >
-                <Play className="w-3.5 h-3.5 fill-stone-500 stroke-none" />
-                <span>Video Reel</span>
-              </button>
-              <button
                 onClick={triggerPrint}
                 className="flex items-center space-x-1.5 px-3.5 py-1.5 rounded-lg border border-stone-200 text-stone-700 bg-white hover:bg-stone-50 hover:text-stone-900 text-xs font-medium transition-all"
               >
@@ -140,23 +132,13 @@ export default function Header({ activeSection, onSectionChange }: HeaderProps) 
                     {item.label}
                   </button>
                 ))}
-                <div className="pt-4 border-t border-stone-200/60 mt-3 grid grid-cols-2 gap-2">
-                  <button
-                    onClick={() => {
-                      setMobileMenuOpen(false);
-                      setShowVideoModal(true);
-                    }}
-                    className="flex items-center justify-center space-x-1.5 py-2.5 rounded-lg border border-stone-200 text-stone-700 bg-white text-xs font-medium"
-                  >
-                    <Play className="w-3.5 h-3.5 text-stone-500 fill-stone-500 stroke-none" />
-                    <span>Watch Reel</span>
-                  </button>
+                <div className="pt-4 border-t border-stone-200/60 mt-3 flex flex-col gap-2">
                   <button
                     onClick={() => {
                       setMobileMenuOpen(false);
                       triggerPrint();
                     }}
-                    className="flex items-center justify-center space-x-1.5 py-2.5 rounded-lg border border-stone-200 text-stone-700 bg-white text-xs font-medium"
+                    className="flex items-center justify-center space-x-1.5 py-2.5 rounded-lg border border-stone-200 text-stone-700 bg-white text-xs font-medium w-full"
                   >
                     <FileText className="w-3.5 h-3.5 text-stone-500" />
                     <span>Print PDF</span>
@@ -165,7 +147,7 @@ export default function Header({ activeSection, onSectionChange }: HeaderProps) 
                     href={PERSONAL_INFO.behance}
                     target="_blank"
                     rel="noreferrer"
-                    className="col-span-2 flex items-center justify-center space-x-1.5 py-3 rounded-lg bg-[#ab8355] text-white text-sm font-semibold text-center"
+                    className="flex items-center justify-center space-x-1.5 py-3 rounded-lg bg-[#ab8355] text-white text-sm font-semibold text-center w-full"
                   >
                     <span>View Behance Portfolio</span>
                     <ExternalLink className="w-4 h-4" />
@@ -178,199 +160,228 @@ export default function Header({ activeSection, onSectionChange }: HeaderProps) 
       </header>
 
       {/* Hero Header Area - Traditional visual display of profile summary */}
-      <section className="bg-[#f0ece3] py-12 md:py-20 border-b border-stone-200/60 transition-colors">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="md:flex md:items-center md:space-x-8 lg:space-x-14">
+      <section className="relative py-16 md:py-24 border-b border-stone-800 overflow-hidden bg-stone-950 text-stone-100">
+        
+        {/* Background Video Loop */}
+        <div className="absolute inset-0 z-0 select-none pointer-events-none no-print">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full h-full object-cover opacity-25 scale-105"
+          >
+            <source
+              src="https://assets.mixkit.co/videos/preview/mixkit-slow-motion-of-gold-dust-particles-34538-large.mp4"
+              type="video/mp4"
+            />
+          </video>
+          {/* Creative dark radial and linear gradients to blend the loop flawlessly and secure strict contrast */}
+          <div className="absolute inset-0 bg-gradient-to-r from-stone-950 via-stone-900/90 to-stone-950" />
+          <div className="absolute inset-0 bg-radial-gradient from-transparent to-stone-950/80" />
+        </div>
+
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <motion.div 
+            initial="hidden"
+            animate="visible"
+            variants={{
+              hidden: { opacity: 0 },
+              visible: {
+                opacity: 1,
+                transition: {
+                  staggerChildren: 0.15,
+                  delayChildren: 0.1
+                }
+              }
+            }}
+            className="md:flex md:items-center md:space-x-8 lg:space-x-14"
+          >
             {/* Visual Headshot Representation */}
-            <div className="flex-shrink-0 flex justify-center mb-6 md:mb-0">
-              <div className="relative">
-                {/* Visual Frame */}
-                <div className="absolute inset-0 rounded-full border border-[#ab8355]/30 scale-105 animate-pulse" />
-                <div className="w-32 h-32 md:w-44 md:h-44 rounded-full overflow-hidden bg-stone-900 border-4 border-white shadow-lg flex items-center justify-center text-white relative">
-                  {/* We draw a refined digital representation resembling Cochin style developer image in styling */}
+            <motion.div 
+              variants={{
+                hidden: { opacity: 0, scale: 0.8 },
+                visible: { opacity: 1, scale: 1, transition: { duration: 0.5, ease: 'easeOut' } }
+              }}
+              className="flex-shrink-0 flex justify-center mb-6 md:mb-0"
+            >
+              <div className="relative group">
+                {/* Visual Animated Gold/Bronze Frame */}
+                <motion.div 
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
+                  className="absolute inset-[-6px] rounded-full border border-dashed border-[#ab8355]/40 scale-105" 
+                />
+                <motion.div 
+                  animate={{ scale: [1, 1.04, 1] }}
+                  transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+                  className="absolute inset-[-12px] rounded-full border border-stone-800/40" 
+                />
+                
+                <motion.div 
+                  whileHover={{ scale: 1.06, rotate: 2 }}
+                  transition={{ type: 'spring', stiffness: 300, damping: 15 }}
+                  className="w-36 h-36 md:w-48 md:h-48 rounded-full overflow-hidden bg-stone-900 border-4 border-stone-800 shadow-2xl flex items-center justify-center text-white relative cursor-pointer"
+                >
+                  {/* High-fidelity Vector Portrait resembling Nikhil Raghuvaran */}
                   <svg
                     viewBox="0 0 100 100"
-                    className="w-full h-full text-stone-300 fill-stone-800"
+                    className="w-full h-full select-none"
                     referrerPolicy="no-referrer"
                   >
-                    <rect width="100" height="100" fill="#2d2926" />
-                    {/* Head */}
-                    <circle cx="50" cy="45" r="20" fill="#e8c39e" />
-                    {/* Hair & Beard (Black, well-trimmed beard) */}
-                    <path d="M30,45 C30,30 70,30 70,45 C70,30 30,30 30,45 Z" fill="#1c1917" />
-                    {/* Beard shape covering chin */}
-                    <path
-                      d="M32,45 C32,65 68,65 68,45"
-                      stroke="#1c1917"
-                      strokeWidth="8"
-                      fill="none"
-                      strokeLinecap="round"
-                    />
-                    <path d="M40,64 C45,69 55,69 60,64" fill="#1c1917" />
-                    {/* Glasses (Stylish transparent/clear thick frames as in image) */}
-                    <circle cx="42" cy="43" r="6" stroke="#f1f5f9" strokeWidth="2.5" fill="none" />
-                    <circle cx="58" cy="43" r="6" stroke="#f1f5f9" strokeWidth="2.5" fill="none" />
-                    <line x1="48" y1="43" x2="52" y2="43" stroke="#f1f5f9" strokeWidth="2" />
-                    {/* Eyes and Eyebrows */}
-                    <ellipse cx="42" cy="43" rx="1.5" ry="1" fill="#1c1917" />
-                    <ellipse cx="58" cy="43" rx="1.5" ry="1" fill="#1c1917" />
-                    {/* Suit Collar/Jacket */}
-                    <path d="M22,90 C22,70 35,70 50,70 C65,70 78,70 78,90 Z" fill="#1c1917" />
-                    {/* White shirt inner */}
-                    <path d="M42,70 L50,82 L58,70 Z" fill="#f8fafc" />
-                    {/* Dark Tie */}
-                    <path d="M48,80 L52,80 L52,90 L48,90 Z" fill="#ab8355" />
+                    <defs>
+                      <linearGradient id="avatarGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="#c7a175" />
+                        <stop offset="50%" stopColor="#ab8355" />
+                        <stop offset="100%" stopColor="#7a5a35" />
+                      </linearGradient>
+                      <linearGradient id="hairGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stopColor="#242220" />
+                        <stop offset="100%" stopColor="#0a0908" />
+                      </linearGradient>
+                      <linearGradient id="suitGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="#202224" />
+                        <stop offset="100%" stopColor="#121316" />
+                      </linearGradient>
+                    </defs>
+                    
+                    {/* Canvas Background with Rich Theme Gradient */}
+                    <circle cx="50" cy="50" r="48" fill="url(#avatarGrad)" />
+                    
+                    {/* Neck / Collar */}
+                    <rect x="44" y="62" width="12" height="15" fill="#dfb391" rx="2" />
+                    
+                    {/* Shirt Collar */}
+                    <path d="M42,70 L50,80 L58,70 L50,67 Z" fill="#ffffff" />
+                    {/* Gold Tie */}
+                    <path d="M48,72 L52,72 L53,92 L47,92 Z" fill="#ab8355" />
+                    
+                    {/* Suit Jacket */}
+                    <path d="M22,96 C22,78 34,75 50,75 C66,75 78,78 78,96 Z" fill="url(#suitGrad)" />
+                    {/* Lapels */}
+                    <path d="M35,75 L45,86 L43,96 L32,86 Z" fill="#2d3033" />
+                    <path d="M65,75 L55,86 L57,96 L68,86 Z" fill="#2d3033" />
+                    
+                    {/* Face Shape */}
+                    <path d="M34,44 C34,31 41,25 50,25 C59,25 66,31 66,44 C66,56 59,65 50,65 C41,65 34,56 34,44 Z" fill="#e8c39e" />
+                    
+                    {/* Side-swept Black Hair (Neat side-swept from his real portrait) */}
+                    <path d="M34,35 C32,28 38,18 50,18 C62,18 67,23 68,30 C64,24 54,23 46,25 C39,27 35,31 34,35 Z" fill="url(#hairGrad)" />
+                    {/* Hair sideburns */}
+                    <path d="M33,36 L36,45 L34,45 Z" fill="url(#hairGrad)" />
+                    <path d="M67,36 L64,45 L66,45 Z" fill="url(#hairGrad)" />
+                    
+                    {/* Well-trimmed Black Beard covering cheek lines and chin */}
+                    <path d="M34,44 C34,54 40,65 50,65 C60,65 66,54 66,44 C66,49 64,54 62,56 C61,54 59,53 58,53 C57,55 53,57 50,57 C47,57 43,55 42,53 C41,53 39,54 38,56 C36,54 34,49 34,44 Z" fill="url(#hairGrad)" />
+                    <path d="M38,56 C40,64 45,67 50,67 C55,67 60,64 62,56 C61,59 56,62 50,62 C44,62 39,59 38,56 Z" fill="#000000" />
+                    
+                    {/* Mustache */}
+                    <path d="M41,51 C45,49 49,50 50,52 C51,50 55,49 59,51 C57,53 52,54 50,54 C48,54 43,53 41,51 Z" fill="#0c0a09" />
+                    
+                    {/* Smart Eyes */}
+                    <circle cx="43" cy="42" r="2.2" fill="#1c1917" />
+                    <circle cx="57" cy="42" r="2.2" fill="#1c1917" />
+                    {/* Eyebrows */}
+                    <path d="M38,37 C41,35 45,36 46,38" stroke="#000000" strokeWidth="1.5" strokeLinecap="round" fill="none" />
+                    <path d="M62,37 C59,35 55,36 54,38" stroke="#000000" strokeWidth="1.5" strokeLinecap="round" fill="none" />
+                    
+                    {/* Smart Round Glasses (Clear/silver-rimmed as in original photo) */}
+                    <circle cx="43" cy="42" r="6.5" stroke="#f1f5f9" strokeWidth="1.8" fill="none" opacity="0.9" />
+                    <circle cx="57" cy="42" r="6.5" stroke="#f1f5f9" strokeWidth="1.8" fill="none" opacity="0.9" />
+                    {/* Glasses bridge */}
+                    <path d="M49.5,41.5 L50.5,41.5" stroke="#f1f5f9" strokeWidth="1.8" />
+                    {/* Subtle lens glare */}
+                    <path d="M39.5,39.5 L42.5,37" stroke="#ffffff" strokeWidth="1" opacity="0.6" strokeLinecap="round" />
+                    <path d="M53.5,39.5 L56.5,37" stroke="#ffffff" strokeWidth="1" opacity="0.6" strokeLinecap="round" />
                   </svg>
-                  <div className="absolute bottom-1 right-1 bg-amber-500 rounded-full p-1 border-2 border-white shadow-xs">
-                    <Sparkles className="w-3.5 h-3.5 text-stone-900" />
+
+                  <div className="absolute bottom-1 right-1 bg-amber-500 rounded-full p-1 border-2 border-stone-900 shadow-sm">
+                    <Sparkles className="w-3.5 h-3.5 text-stone-950" />
                   </div>
-                </div>
+                </motion.div>
               </div>
-            </div>
+            </motion.div>
 
             {/* Title Block */}
             <div className="flex-1 text-center md:text-left">
-              <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-stone-900/5 border border-stone-900/10 text-stone-700 text-xs font-mono mb-3">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              <motion.div 
+                variants={{
+                  hidden: { opacity: 0, y: 15 },
+                  visible: { opacity: 1, y: 0 }
+                }}
+                className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-[#dbb78e] text-xs font-mono mb-4 shadow-sm"
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                 <span>Open to Opportunities</span>
-              </div>
+              </motion.div>
 
-              <h1 className="font-display font-black text-4xl md:text-5xl lg:text-6xl text-stone-950 tracking-tight leading-tight">
+              <motion.h1 
+                variants={{
+                  hidden: { opacity: 0, y: 15 },
+                  visible: { opacity: 1, y: 0 }
+                }}
+                className="font-display font-black text-4xl md:text-5xl lg:text-6xl text-white tracking-tight leading-tight"
+              >
                 {PERSONAL_INFO.name}
-              </h1>
+              </motion.h1>
 
-              <p className="font-sans font-medium text-lg md:text-xl text-[#ab8355] mt-2">
+              <motion.p 
+                variants={{
+                  hidden: { opacity: 0, y: 15 },
+                  visible: { opacity: 1, y: 0 }
+                }}
+                className="font-sans font-medium text-lg md:text-xl text-[#dbb78e] mt-2.5"
+              >
                 {PERSONAL_INFO.title}
-              </p>
+              </motion.p>
 
-              <div className="mt-4 flex flex-wrap justify-center md:justify-start gap-y-2 gap-x-4 text-xs font-mono text-stone-600">
-                <div className="flex items-center space-x-1">
-                  <MapPin className="w-3.5 h-3.5 text-[#ab8355]" />
+              <motion.div 
+                variants={{
+                  hidden: { opacity: 0, y: 15 },
+                  visible: { opacity: 1, y: 0 }
+                }}
+                className="mt-5 flex flex-wrap justify-center md:justify-start gap-y-2.5 gap-x-5 text-xs font-mono text-stone-300"
+              >
+                <div className="flex items-center space-x-1.5">
+                  <MapPin className="w-3.5 h-3.5 text-[#dbb78e]" />
                   <span>{PERSONAL_INFO.location}</span>
                 </div>
-                <div className="flex items-center space-x-1">
-                  <Phone className="w-3.5 h-3.5 text-[#ab8355]" />
-                  <a href={`tel:${PERSONAL_INFO.phone}`} className="hover:text-[#ab8355] transition-colors">
+                <div className="flex items-center space-x-1.5">
+                  <Phone className="w-3.5 h-3.5 text-[#dbb78e]" />
+                  <a href={`tel:${PERSONAL_INFO.phone}`} className="hover:text-[#dbb78e] transition-colors">
                     {PERSONAL_INFO.phone}
                   </a>
                 </div>
-                <div className="flex items-center space-x-1">
-                  <Mail className="w-3.5 h-3.5 text-[#ab8355]" />
-                  <a href={`mailto:${PERSONAL_INFO.email}`} className="hover:text-[#ab8355] transition-colors">
+                <div className="flex items-center space-x-1.5">
+                  <Mail className="w-3.5 h-3.5 text-[#dbb78e]" />
+                  <a href={`mailto:${PERSONAL_INFO.email}`} className="hover:text-[#dbb78e] transition-colors">
                     {PERSONAL_INFO.email}
                   </a>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Quick Contact Row */}
-              <div className="mt-6 flex flex-wrap justify-center md:justify-start gap-2.5">
-                <a
-                  href={PERSONAL_INFO.linkedin}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center space-x-1.5 px-4 py-2 rounded-lg border border-stone-300 bg-white/70 hover:bg-white hover:border-[#ab8355] text-stone-700 hover:text-stone-950 text-xs font-semibold tracking-wide transition-all"
-                >
-                  <Linkedin className="w-3.5 h-3.5 text-sky-700 fill-sky-700 stroke-none" />
-                  <span>LinkedIn Profile</span>
-                </a>
+              <motion.div 
+                variants={{
+                  hidden: { opacity: 0, y: 15 },
+                  visible: { opacity: 1, y: 0 }
+                }}
+                className="mt-7 flex flex-wrap justify-center md:justify-start gap-2.5"
+              >
                 <a
                   href={PERSONAL_INFO.behance}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center space-x-1.5 px-4 py-2 rounded-lg border border-stone-300 bg-white/70 hover:bg-white hover:border-[#ab8355] text-stone-700 hover:text-stone-950 text-xs font-semibold tracking-wide transition-all"
+                  className="inline-flex items-center space-x-1.5 px-4.5 py-2.5 rounded-lg border border-[#ab8355] bg-[#ab8355] hover:bg-[#967247] hover:border-[#967247] text-white text-xs font-semibold tracking-wide transition-all shadow-md hover:shadow-lg"
                 >
-                  <span className="flex items-center justify-center w-3.5 h-3.5 rounded bg-blue-600 text-white font-bold text-[8px] tracking-tighter">Bē</span>
-                  <span>Behance Projects</span>
+                  <span className="flex items-center justify-center w-3.5 h-3.5 rounded bg-white text-[#ab8355] font-bold text-[8px] tracking-tighter mr-0.5">Bē</span>
+                  <span>Behance Portfolio</span>
                 </a>
-                <button
-                  onClick={() => setShowVideoModal(true)}
-                  className="inline-flex items-center space-x-1.5 px-4 py-2 rounded-lg border border-stone-300 bg-white/70 hover:bg-white hover:border-[#ab8355] text-stone-700 hover:text-stone-950 text-xs font-semibold tracking-wide transition-all"
-                >
-                  <Play className="w-3.5 h-3.5 text-stone-900 fill-stone-900 stroke-none" />
-                  <span>Introductory Video</span>
-                </button>
-              </div>
+              </motion.div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
-
-      {/* Video introduction modal */}
-      <AnimatePresence>
-        {showVideoModal && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-950/70 backdrop-blur-xs no-print"
-          >
-            <motion.div
-              initial={{ scale: 0.95, y: 15 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.95, y: 15 }}
-              className="bg-stone-900 text-stone-100 rounded-2xl max-w-2xl w-full p-6 border border-stone-700 shadow-2xl relative overflow-hidden"
-            >
-              <button
-                onClick={() => setShowVideoModal(false)}
-                className="absolute top-4 right-4 text-stone-400 hover:text-white p-1.5 hover:bg-stone-800 rounded-lg transition-all"
-              >
-                <X className="w-5 h-5" />
-              </button>
-              <div className="inline-flex items-center space-x-1 px-2 py-0.5 rounded-md bg-[#ab8355]/20 text-[#dbb78e] text-[10px] font-mono uppercase mb-2">
-                <span>REEL SHOTWALK</span>
-              </div>
-              <h3 className="font-display font-semibold text-lg text-white pr-8">
-                Nikhil Raghuvaran — Creative Video introduction
-              </h3>
-              <p className="font-sans text-xs text-stone-400 mt-1 mb-4">
-                Executive portfolio overview, showcasing design systems leadership and multidisciplinary art direction.
-              </p>
-
-              {/* Simulated Elegant Video Frame */}
-              <div className="aspect-video w-full rounded-lg bg-stone-950 flex flex-col items-center justify-center p-4 text-center border border-stone-800 relative group overflow-hidden">
-                <div className="absolute inset-0 bg-radial from-transparent to-stone-950 opacity-80" />
-                
-                {/* Visual abstract soundwave/videowrapper representation */}
-                <div className="flex items-center space-x-1.5 z-10 opacity-30 group-hover:opacity-60 transition-opacity">
-                  <span className="w-1 h-8 bg-[#ab8355] rounded-full animate-pulse" />
-                  <span className="w-1 h-12 bg-stone-500 rounded-full animate-pulse" />
-                  <span className="w-1 h-16 bg-[#ab8355] rounded-full animate-pulse" />
-                  <span className="w-1 h-10 bg-stone-400 rounded-full animate-pulse" />
-                  <span className="w-1 h-14 bg-[#ab8355] rounded-full animate-pulse" />
-                  <span className="w-1 h-8 bg-stone-600 rounded-full animate-pulse" />
-                </div>
-
-                <div className="mt-4 z-10">
-                  <div className="mx-auto w-16 h-16 rounded-full bg-white text-stone-900 group-hover:bg-[#ab8355] group-hover:text-white flex items-center justify-center transition-all duration-300 shadow-lg cursor-pointer">
-                    <Play className="w-6 h-6 fill-current stroke-none ml-1" />
-                  </div>
-                  <span className="block text-xs font-mono text-stone-400 mt-3">
-                    Click to launch video demonstration on Behance
-                  </span>
-                </div>
-              </div>
-
-              <div className="mt-5 flex justify-end space-x-2">
-                <button
-                  onClick={() => setShowVideoModal(false)}
-                  className="px-4 py-2 border border-stone-800 rounded-lg hover:bg-stone-800 text-stone-300 text-xs font-medium transition-all"
-                >
-                  Close Window
-                </button>
-                <a
-                  href={PERSONAL_INFO.behance}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="px-4 py-2 bg-[#ab8355] hover:bg-[#967247] text-white rounded-lg text-xs font-semibold transition-all inline-flex items-center space-x-1"
-                >
-                  <span>Go to Behance Profile</span>
-                  <ExternalLink className="w-3.5 h-3.5" />
-                </a>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </>
   );
 }
